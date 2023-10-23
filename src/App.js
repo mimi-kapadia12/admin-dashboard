@@ -1,6 +1,6 @@
 // Auther : Mansi Kapadia
 // 8-10-2023
-
+// 23 -10 - 2023 : Mansi Kapadia  : Added Alerts and error handling logic
 import EmployeeList from "./components/employee-list";
 import { fetchEmployees } from "../src/services/employee-service";
 import "./App.css";
@@ -10,6 +10,10 @@ function App() {
   const [employees, setEmployees] = useState([]);
 
   const handleDelete = (id) => {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this record?"
+    );
+    if (!shouldDelete) return;
     setEmployees(employees.filter((record) => record.id !== id));
   };
 
@@ -25,14 +29,14 @@ function App() {
       });
       setEmployees(data);
     } catch (error) {
-      console.error("An error occurred while fetching the data:", error);
+      window.alert("An error occurred while fetching the data: " + error);
     }
   };
 
-  const handleSave = (id , edittedRecord) => {    
+  const handleSave = (id, edittedRecord) => {
     setEmployees((record) => {
-      return record.map((employee) => {        
-        if (employee.id == id) {          
+      return record.map((employee) => {
+        if (employee.id == id) {
           return {
             ...employee,
             name: edittedRecord.name,

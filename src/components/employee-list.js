@@ -1,6 +1,6 @@
 // Auther : Mansi Kapadia
 // 8-10-2023
-
+// 23- 10 -2023 : Mansi Kapadia : made css changes  and Added No records found message
 import "../components/employee-list.css";
 import React, { useState, useEffect } from "react";
 
@@ -26,13 +26,14 @@ const EmployeeList = ({
 
   useEffect(() => {
     setRecords(employees.slice(firstIndex, lastIndex)); // for pagination
-    
+
     // if all the records are deleted from the last page it shows the second last page
-    if(currentPage > 0 && nPage > 0 && currentPage > nPage) setCurrentPage(nPage);  
+    if (currentPage > 0 && nPage > 0 && currentPage > nPage)
+      setCurrentPage(nPage);
   }, [currentPage, employees]);
 
   //#region Edit and Delete employee records
-  
+
   // to select single record
   const handleSelection = (id) => {
     setSelectedEmployee((prev) =>
@@ -70,7 +71,7 @@ const EmployeeList = ({
   //to save editted employee data
   const handleSaveEmployees = (id) => {
     // Save edited values for selected employees
-    handleSave(id , editedValues[id]);
+    handleSave(id, editedValues[id]);
 
     setEditMode((prev) => ({
       ...prev,
@@ -120,99 +121,123 @@ const EmployeeList = ({
           </tr>
         </thead>
         <tbody>
-          {records.map((employee) => (
-            <tr
-              key={employee.id}
-              style={{
-                backgroundColor: selectedEmployee.includes(employee.id)
-                  ? "#ddd"
-                  : "transparent",
-              }}
-            >
-              <td>
-                <input
-                  type="checkbox"
-                  onChange={() => handleSelection(employee.id)}
-                  checked={selectedEmployee.includes(employee.id)}
-                />
-              </td>
-              {editMode[employee.id] ? (
-                <>
-                  <td>
-                    <input
-                      type="text"
-                      value={editedValues[employee.id].name}
-                      onChange={(e) =>
-                        setEditedValues((prev) => ({
-                          ...prev,
-                          [employee.id]: {
-                            ...prev[employee.id],
-                            name: e.target.value,
-                          },
-                        }))
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      value={editedValues[employee.id].email}
-                      onChange={(e) =>
-                        setEditedValues((prev) => ({
-                          ...prev,
-                          [employee.id]: {
-                            ...prev[employee.id],
-                            email: e.target.value,
-                          },
-                        }))
-                      }
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      value={editedValues[employee.id].role}
-                      onChange={(e) =>
-                        setEditedValues((prev) => ({
-                          ...prev,
-                          [employee.id]: {
-                            ...prev[employee.id],
-                            role: e.target.value,
-                          },
-                        }))
-                      }
-                    />
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td>{employee.name}</td>
-                  <td>{employee.email}</td>
-                  <td>{employee.role}</td>
-                </>
-              )}
-              <td>
-                {editMode[employee.id] ? (
-                  <button className="btn" onClick={() => handleSaveEmployees(employee.id)}>
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-action"
-                    onClick={() => handleEditEmployee(employee.id)}
-                  >
-                    Edit
-                  </button>
-                )}
-                <button
-                  className="btn btn-action btn-delete"
-                  onClick={() => handleDelete(employee.id)}
-                >
-                  Delete
-                </button>
-              </td>
+          {records.length === 0 ? (
+            <tr>
+              <td colSpan="5">No records found</td>
             </tr>
-          ))}
+          ) : (
+            records.map((employee) => (
+              <tr
+                key={employee.id}
+                style={{
+                  backgroundColor: selectedEmployee.includes(employee.id)
+                    ? "#ddd"
+                    : "transparent",
+                }}
+              >
+                <td>
+                  <input
+                    type="checkbox"
+                    onChange={() => handleSelection(employee.id)}
+                    checked={selectedEmployee.includes(employee.id)}
+                  />
+                </td>
+                {editMode[employee.id] ? (
+                  <>
+                    <td>
+                      <input
+                        className="input-edit"
+                        type="text"
+                        value={editedValues[employee.id].name}
+                        onChange={(e) =>
+                          setEditedValues((prev) => ({
+                            ...prev,
+                            [employee.id]: {
+                              ...prev[employee.id],
+                              name: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="input-edit"
+                        type="text"
+                        value={editedValues[employee.id].email}
+                        onChange={(e) =>
+                          setEditedValues((prev) => ({
+                            ...prev,
+                            [employee.id]: {
+                              ...prev[employee.id],
+                              email: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="input-edit"
+                        type="text"
+                        value={editedValues[employee.id].role}
+                        onChange={(e) =>
+                          setEditedValues((prev) => ({
+                            ...prev,
+                            [employee.id]: {
+                              ...prev[employee.id],
+                              role: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td>{employee.name}</td>
+                    <td>{employee.email}</td>
+                    <td>{employee.role}</td>
+                  </>
+                )}
+                <td>
+                  {editMode[employee.id] ? (
+                    <button
+                      className="btn-action"
+                      onClick={() => handleSaveEmployees(employee.id)}
+                    >
+                      <img
+                        src="/icons8-save-48.png"
+                        alt="Save Icon"
+                        className="icon-action"
+                      />
+                    </button>
+                  ) : (
+                    <button
+                      className="btn-action"
+                      onClick={() => handleEditEmployee(employee.id)}
+                    >
+                      <img
+                        src="/icons8-edit-48.png"
+                        alt="Edit Icon"
+                        className="icon-action"
+                      />
+                    </button>
+                  )}
+                  <button
+                    className="btn-action"
+                    onClick={() => handleDelete(employee.id)}
+                  >
+                    <img
+                      src="/icons8-delete-48.png"
+                      alt="Delete Icon"
+                      className="icon-action"
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
       <div className="pagination">

@@ -1,8 +1,10 @@
 .App {
   text-align: center;
-  padding: 10px;
-  margin: 0 auto;
-  max-width: 800px;
+  padding: 0;
+  margin: auto;
+  max-width: 1000px;
+  width: 100%;
+  aspect-ratio: 100 / 29;
 }
 
 .App-logo {
@@ -32,14 +34,15 @@
 }
 
 .search-input {
-  width: 100%;
-  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 3px;
-  outline: none;
-  font-size: 12px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  max-width: 100%; /* Ensure it doesn't exceed the table's width */
+  border-radius: 5px;
+  border-collapse: collapse;
+  margin: auto;
+  padding: 8px;
+  width: 90%;
+  table-layout: fixed;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .search-input::placeholder {
