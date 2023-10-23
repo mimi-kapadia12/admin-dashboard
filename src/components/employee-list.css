@@ -53,7 +53,6 @@
   color: white;
 }
 
-/* Style for the "Previous" and "Next" buttons */
 .page-button.prev-next {
   background-color: white;
   color: black;
@@ -102,6 +101,7 @@ table td {
   text-align: center;
   text-wrap: wrap;
   word-wrap: break-word;
+  font-size: 0.75em;
 }
 
 table th {
